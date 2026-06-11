@@ -40,25 +40,55 @@ Respostas em JSON com status codes.
 
 ---
 
-## Semana 4 - API de Tarefas
+## Semana 4 - API de Tarefas (Arquitetura em Camadas)
 
-Mesma ideia da semana 3, mas agora organizado com pastas, autoload do Composer e Router proprio.
+Evolução da semana 3. Agora com separação por camadas, autoload do Composer e Router próprio.
 
-Rotas:
-- GET /tarefas → lista
+### Arquitetura
+
+Requisição HTTP → Router (direciona pra rota certa) → Controller (lida com HTTP: status codes, captura erros) → Service (valida dados, aplica regras de negócio) → Repository (executa SQL no banco)
+
+### Estrutura de Pastas
+
+semana4_php/
+├── public/
+│   └── index.php              → entrada, monta dependências e rotas
+├── src/
+│   ├── Http/Router.php        → direciona requisição pro controller certo
+│   ├── Controller/            → recebe HTTP, delega pro Service
+│   ├── Service/               → validação e lógica de negócio
+│   ├── Repository/            → SQL puro com PDO
+│   ├── Model/                 → DTO (objeto que carrega dados entre camadas)
+│   ├── Config/                → conexão com o banco (Singleton)
+│   ├── Enum/                  → Prioridade e StatusTarefa (valores fixos)
+│   └── Exception/             → erros personalizados (ValidationException, NotFoundException)
+└── tests/
+
+### Rotas
+
+- GET /tarefas → lista (paginado)
 - GET /tarefas/{id} → busca uma
 - POST /tarefas → cria
 - PUT /tarefas/{id} → atualiza
 - DELETE /tarefas/{id} → remove
 
-Tem enums pra status (pendente, em_progresso, concluida, cancelada) e prioridade (baixa, media, alta, urgente).
+### Conceitos aplicados
 
-Pra rodar:
-  cd semana4_php
-  composer install
-  cp .env.example .env
-  (preenche o .env com os dados do banco)
-  php -S localhost:8000 -t public
+- Separação de responsabilidades
+- Injeção de dependência via construtor
+- PSR-4 autoloading (Composer)
+- Enums nativos do PHP 8.1
+- Prepared Statements
+- Exceções customizadas pra mapear erros HTTP (400, 404)
+- Singleton na conexão com o banco
+
+### Pra rodar
+
+cd semana4_php
+composer install
+cp .env.example .env
+# preenche o .env com os dados do banco
+php -S localhost:8000 -t public
 
 ---
 
