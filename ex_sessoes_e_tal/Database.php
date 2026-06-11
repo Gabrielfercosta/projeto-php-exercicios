@@ -1,0 +1,12 @@
+<?php
+
+CREATE DATABASE IF NOT EXISTS curso_php;
+USE curso_php;
+
+CREATE TABLE usuarios (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    email VARCHAR(150) NOT NULL UNIQUE,
+    senha_hash VARCHAR(255) NOT NULL,
+    criado_em DATETIME NOT NULL
+);
