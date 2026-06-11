@@ -48,22 +48,6 @@ Evolução da semana 3. Agora com separação por camadas, autoload do Composer 
 
 Requisição HTTP → Router (direciona pra rota certa) → Controller (lida com HTTP: status codes, captura erros) → Service (valida dados, aplica regras de negócio) → Repository (executa SQL no banco)
 
-### Estrutura de Pastas
-
-semana4_php/
-├── public/
-│   └── index.php              → entrada, monta dependências e rotas
-├── src/
-│   ├── Http/Router.php        → direciona requisição pro controller certo
-│   ├── Controller/            → recebe HTTP, delega pro Service
-│   ├── Service/               → validação e lógica de negócio
-│   ├── Repository/            → SQL puro com PDO
-│   ├── Model/                 → DTO (objeto que carrega dados entre camadas)
-│   ├── Config/                → conexão com o banco (Singleton)
-│   ├── Enum/                  → Prioridade e StatusTarefa (valores fixos)
-│   └── Exception/             → erros personalizados (ValidationException, NotFoundException)
-└── tests/
-
 ### Rotas
 
 - GET /tarefas → lista (paginado)
